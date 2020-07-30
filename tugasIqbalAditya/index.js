@@ -9,5 +9,5 @@ import BasicFlatlistData from './components/BasicFlatListData';
 
 
 
-
+//ini apaansih hahahaha
 AppRegistry.registerComponent(appName, () => BasicFlatlistData);
