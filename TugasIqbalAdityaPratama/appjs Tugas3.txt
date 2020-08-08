@@ -1,0 +1,189 @@
+import React,{useState} from 'react';
+import{StyleSheet,Text,View,TextInput,Button,ScrollView, FlatList,TouchableOpacity, Alert, TouchableNativeFeedback, Keyboard} from 'react-native';
+import Header from './components/header';
+import JadwalItem from './components/jadwalitem';
+import TambahJadwal from './components/tambahjadwal';
+
+
+export default function App(){
+  const [jadwal,setjadwal] = useState([
+    {text: 'Shalat Tahajud',key: '1'},
+    {text: 'Shalat Subuh',key: '2'},
+    {text: 'Halaqah',key: '3'},
+    {text: 'Sarapan',key: '4'},
+    {text: 'Tidur',key: '5'},
+    {text: 'Shalat Dhuhur',key: '6'},
+    {text: 'Makan Siang',key: '7'},
+    {text: 'Belajar',key: '8'},
+    {text: 'Shalat Ashar',key: '9'},
+    {text: 'Istirahat',key: '10'},
+    {text: 'Shalat Maghrib',key: '11'},
+    {text: 'Halaqah',key: '12'},
+    {text: 'Shalat Isya',key: '13'},
+    {text: 'Makan Malam',key: '14'},
+    {text: 'Kegiatan Mandiri',key: '15'},
+    {text: 'Istirahat',key: '16'},
+  ]);
+    const pressHandler = (key) => {
+      setjadwal((prevJadwal) => {
+        return prevJadwal.filter(jadwal => jadwal.key != key);
+      });
+    }
+    const submitHandler = (text) => {
+
+      if (text.length > 2) { 
+
+      setjadwal((prevJadwal) => {
+        return [
+          {text: text, key: Math.random().toString()},
+          ...prevJadwal
+        ];
+      });
+    }else{
+        Alert.alert('Warning','Ada yang salah bung', [
+        {text: 'Apakah anda paham ?', onPress: () => console.log('alert closed')}
+      ]);
+    }
+    }
+return (
+  <TouchableNativeFeedback onPress={() => {
+    Keyboard.dismiss();
+    console.log('dismissed keyboard')
+  }}>
+  <View style={styles.container}>
+    <ScrollView>
+  <Header />
+    <View style={styles.content}>
+    <TambahJadwal submitHandler ={submitHandler} />
+    <View style={styles.list}>
+    <FlatList
+    data={jadwal}
+    renderItem={({item}) => (
+    <JadwalItem item ={item} pressHandler={pressHandler}/> 
+    )}
+    />
+     </View>
+   </View>
+   </ScrollView>
+  </View>
+  </TouchableNativeFeedback>
+);
+  }
+  //const [name,setName] = useState('Iqbal');
+  //const [age,setAge] = useState('23');
+  // const[people,setPeople] = useState([
+  //   {name: 'rivano',id: '1'},
+  //   {name: 'fachrul',id: '2'},
+  //   {name: 'karim',id: '3'},
+  //   {name: 'davidaa',id: '4'},
+  //   {name: 'jodiia',id: '5'},
+  //   {name: 'nelanaa',id: '6'},
+  // ]);
+  {/*const pressHandler = (id) => {
+    console.log();
+    setPeople((prevPeople) => {
+      return prevPeople.filter(person => person.id != id);
+    })
+  }
+*/}
+  // return (
+  // <View style={styles.container}>
+    {/*materi FlatList dan TouchableOpacity
+    <FlatList
+    numColumns={2}
+    keyExtractor={(item) => item.id}
+    data={people}
+    renderItem={({item}) => (
+    <TouchableOpacity onPress={() => pressHandler(item.id)}>
+    <Text style={styles.item}>{item.name}</Text>
+    </TouchableOpacity>
+  )}
+    
+    />
+    */}
+    {/*materi sccroolview
+    <ScrollView>
+      {people.map ((item) => {
+        return (
+      <View key={item.key}>
+      <Text style={styles.item}>{item.name} {item.key}</Text>
+      </View>
+        )})}
+        </ScrollView>*/}
+    {/*<Text>Masukan Nama: </Text>
+    <TextInput  
+      multiline
+      style= {styles.input}
+      placeholder='masukan nama'
+      onChangeText={(val) => setName(val)}
+      />
+    <Text>Masukan Umur: </Text>
+    <TextInput  
+      multiline
+      style= {styles.input}
+      keyboardType = 'numeric'
+      placeholder='masukan umur'
+      onChangeText={(val) => setName(val)}
+      />
+    <Text>nama: {name}, umur: {age} </Text>
+    {/*<View style={styles.kepala}>
+    <Text style={styles.text}>Yoo </Text>
+    </View>
+    <View style={styles.body}>
+      <Text style={styles.text}>Body 1</Text>
+      <Text>Body 2</Text>
+      <Text>Body 3</Text>
+  </View>
+  
+  </View>*/}
+  
+const styles=StyleSheet.create({
+  container:{
+    flex:1,
+    backgroundColor:'cyan',
+    paddingTop : 50,
+    paddingHorizontal : 30,
+    //alignItems: 'center',
+    //justifyContent: 'center',
+  },
+   item: {
+    marginTop:20,
+    marginHorizontal:10,
+    padding:20,
+    backgroundColor: 'greenyellow',
+    fontSize:20,
+  },
+  content: {
+    padding:40,
+    //flex:1,
+    backgroundColor:'red',
+  },
+  list: {
+    marginTop:20,
+  },
+  kepala: {
+    backgroundColor: 'black',
+    padding: 20,
+  },
+  body: {
+    backgroundColor: 'coral',
+    padding: 5,
+    fontWeight: 'bold',
+  },
+  input: {
+    borderWidth: 1,
+    borderColor:'yellow',
+    padding: 8,
+    margin: 10,
+    width: 200,
+  },
+  text: {
+    color: 'red',
+    fontWeight: 'bold',
+    fontSize: 40,
+    fontFamily: 'chiller',
+  },
+  buttonContainer: {
+    marginBottom: 20,
+  },
+})
